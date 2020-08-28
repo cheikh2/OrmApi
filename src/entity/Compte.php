@@ -69,12 +69,18 @@ class Compte
      */
     private $physiques;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Operation", mappedBy="compte")
+     */
+    private $operations;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->typeComptes = new ArrayCollection();
         $this->morals = new ArrayCollection();
         $this->physiques = new ArrayCollection();
+        $this->operations = new ArrayCollection();
     }
 
     public function getId()
@@ -170,8 +176,16 @@ class Compte
     {
         return $this->physiques;
     }
-    public function setPhysique($physiques)
+    public function setPhysiques($physiques)
     {
         $this->physiques = $physiques;
+    }
+    public function getOperations()
+    {
+        return $this->operations;
+    }
+    public function setOperations($operations)
+    {
+        $this->operations = $operations;
     }
 }

@@ -1,0 +1,47 @@
+<?php
+namespace src\model;
+
+use libs\system\Model;
+
+class OperationDb extends Model
+{
+    public function findAll(){
+        return $this->entityManager
+                    ->createQuery("SELECT o FROM Operation o")
+                    ->getResult();
+    }
+
+    public function get($id)
+    {
+        return $this->entityManager
+            ->createQuery("SELECT o FROM Operation o WHERE o.id = " . $id)
+            ->getResult();
+
+    }
+
+    public function insert($operation){
+        $this->entityManager->persist($operation);
+        $this->entityManager->flush();
+    }
+
+    public function getTypeOperation($id)
+    {
+        return $this->entityManager
+            ->createQuery("SELECT t FROM TypeOperation t WHERE t.id = " . $id)
+            ->getResult();
+    }
+
+    public function getOp($id)
+    {
+        return $this->entityManager
+            ->createQuery("SELECT * FROM Operation WHERE compte_id =". $id)
+            ->getResult();
+    } 
+
+    public function getOperations($numCompte)
+    {
+        return $this->entityManager
+        ->createQuery("SELECT o.montant,c.numCompte FROM Operation o, Compte c WHERE c.numCompte='".$numCompte."' AND o.compte=c.id")
+        ->getResult();
+    }
+}

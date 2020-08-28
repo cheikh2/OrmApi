@@ -48,7 +48,32 @@ class PhysiqueController extends Controller
     {
         $physiquedao = new PhysiqueDb;
         $physique = $physiquedao->findAll();
-        return $this->view->load("physique/getAll", $physique);
+        //return $this->view->load("physique/getAll", $physique);
+
+        $retour["success"] = true;
+        $retour["message"] = "Voici les clients physiques";
+        $retour["results"]["nombre"] = count($physique);
+        $retour["results"]["physiquex"] = $physique;
+
+        for ($i=0; $i < count($physique); $i++) { 
+            $phy = [
+                "id"=> $physique[$i]->getId(),
+                "prenom"=> $physique[$i]->getPrenom(),
+                "nom"=> $physique[$i]->getNom(),
+                "adress"=> $physique[$i]->getAdress(),
+                "email"=> $physique[$i]->getEmail(),
+                "telephone"=> $physique[$i]->getTelephone(),
+                "sexe"=> $physique[$i]->getSexe(),
+                "profession"=> $physique[$i]->getProfession(),
+                "cni"=> $physique[$i]->getCni(),
+                "salaire"=> $physique[$i]->getSalaire(),
+                "moral"=> $physique[$i]->getMoral(),
+
+            ];
+            $retour["results"]["physiques"][$i] = $phy;
+
+        }
+        echo json_encode($retour);
     }
     
 

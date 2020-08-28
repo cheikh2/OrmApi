@@ -44,5 +44,14 @@ class MoralDb extends Model
         $this->entityManager->remove($m);
         $this->entityManager->flush();
     }
+
+function retour_json($success, $msg, $results = NULL)
+    {
+        $retour["success"] = $success;
+        $retour["message"] = $msg;
+        $retour["results"] = $results;
+
+        echo json_encode($retour);
+    }
 }
 

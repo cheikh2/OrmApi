@@ -40,7 +40,31 @@ class CompteController extends Controller
     {
         $comptedao = new CompteDb;
         $compte = $comptedao->findAll();
-        return $this->view->load("compte/getAll", $compte);
+        //return $this->view->load("compte/getAll", $compte);
+
+        $retour["success"] = true;
+        $retour["message"] = "Voici les comptes";
+        $retour["results"]["nombre"] = count($compte);
+        $retour["results"]["comptes"] = $compte;
+
+        for ($i=0; $i < count($compte); $i++) { 
+            $comp = [
+                "id"=> $compte[$i]->getId(),
+                "numAgence"=> $compte[$i]->getNumAgence(),
+                "numCompte"=> $compte[$i]->getNumCompte(),
+                "rib"=> $compte[$i]->getRib(),
+                "montant"=> $compte[$i]->getMontant(),
+                "dateDebut"=> $compte[$i]->getDateDebut(),
+                "dateFin"=> $compte[$i]->getDateFin(),
+                "typeComptes"=> $compte[$i]->getTypeComptes(),
+                "morals"=> $compte[$i]->getMorals(),
+                "physiques"=> $compte[$i]->getPhysiques()
+
+            ];
+            $retour["results"]["comptes"][$i] = $comp;
+
+        }
+        echo json_encode($retour);
     }
     
 
@@ -49,5 +73,36 @@ class CompteController extends Controller
         $moraldao = new MoralDb;
         $moral = $moraldao->findAll();
         return $this->view->load("compte/add", $moral);
+    }
+
+    public function getNum($numCompte)
+    {
+        $comptedao = new CompteDb;
+        $compte = $comptedao->getOperations();
+        //return $this->view->load("compte/getAll", $compte);
+
+        $retour["success"] = true;
+        $retour["message"] = "Voici les operation";
+        $retour["results"]["nombre"] = count($compte);
+        $retour["results"]["comptes"] = $compte;
+
+        for ($i=0; $i < count($compte); $i++) { 
+            $comp = [
+                "id"=> $compte[$i]->getId(),
+                // "numAgence"=> $compte[$i]->getNumAgence(),
+                // "numCompte"=> $compte[$i]->getNumCompte(),
+                // "rib"=> $compte[$i]->getRib(),
+                // "montant"=> $compte[$i]->getMontant(),
+                // "dateDebut"=> $compte[$i]->getDateDebut(),
+                // "dateFin"=> $compte[$i]->getDateFin(),
+                // "typeComptes"=> $compte[$i]->getTypeComptes(),
+                // "morals"=> $compte[$i]->getMorals(),
+                // "physiques"=> $compte[$i]->getPhysiques()
+
+            ];
+            $retour["results"]["comptes"][$i] = $comp;
+
+        }
+        echo json_encode($retour);
     }
 }

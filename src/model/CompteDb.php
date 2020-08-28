@@ -29,4 +29,11 @@ class CompteDb extends Model
             ->createQuery("SELECT m FROM Moral m WHERE m.id = " . $id)
             ->getResult();
     }
+    public function getOperations($numCompte)
+    {
+        return $this->entityManager
+        ->createQuery("SELECT o,c FROM Operation o, Compte c WHERE c.numCompte=".$id." AND c.id=o.compte_id")
+        //SELECT * FROM Operation o, Compte c WHERE c.numCompte=CCCCC AND c.id=o.compte_id
+        ->getResult();
+    }
 }

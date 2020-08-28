@@ -1,6 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: Origin, Content-Type");
 header('Content-Type: application/json; charset=UTF-8');
 //namespace src\controller;
 require_once "src/entity/Moral.php";
@@ -30,7 +28,7 @@ class MoralController extends Controller
             $moraldao = new MoralDb;
             $moraldao->insert($moral);
 
-            header('Location:getAll');
+            //header('Location:getAll');
         }
         return $this->view->load("moral/add");
     }
@@ -39,7 +37,8 @@ class MoralController extends Controller
     {
         $moraldao = new MoralDb;
         $moral = $moraldao->get($id);
-        return $this->view->load("moral/edit", $moral);
+        //return $this->view->load("moral/edit", $moral);
+        echo json_encode($moral);
     }
 
     ####--- Liste de tous les clients marals ---####
@@ -67,7 +66,7 @@ class MoralController extends Controller
             $retour["results"]["moraux"][$i] = $moraux;
 
         }
-
+        echo json_encode($retour);
         /*foreach ($morals as $key => $value) {
             $mor = [
                 "id"=> $value->getId(),
@@ -77,7 +76,6 @@ class MoralController extends Controller
             $retour["results"]["moraux"] = $mor;
             echo json_encode($retour);
         }*/
-        echo json_encode($retour);
         
         
     }
