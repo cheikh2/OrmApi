@@ -41,7 +41,16 @@ class OperationDb extends Model
     public function getOperations($numCompte)
     {
         return $this->entityManager
-        ->createQuery("SELECT o.montant,c.numCompte FROM Operation o, Compte c WHERE c.numCompte='".$numCompte."' AND o.compte=c.id")
+        ->createQuery("SELECT c.numCompte, o.montant, t.libelle 
+        FROM Operation o, Compte c, TypeOperation t 
+        WHERE c.numCompte='".$numCompte."' AND o.compte=c.id AND o.typeOperations=t.id")
         ->getResult();
+
+        /*
+        $query = $entityManager->createQuery("SELECT o
+        FROM Operation o JOIN o.compte c
+        WHERE c.NumCompte =:numero
+        ")->setParameter('numero',$numcompte)->getResult();
+        */
     }
 }
